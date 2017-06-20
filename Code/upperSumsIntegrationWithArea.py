@@ -5,30 +5,28 @@ from math import sin, cos, tan, pi
 style.use('ggplot')
 plt.ion()
 
-def plotting(func, fr, miniSteps, colour):
-    X = []
-    y = []
-    x = fr[0]
-    while x <= fr[1]:
-        X.append(x)
-        y.append(eval(func))
-        x += miniSteps
-
-    plt.plot(X, y, color=colour)
-
 funcRange = [-5.2, 5.2]
 interval = funcRange[1] - funcRange[0]
 steps = 2
+miniSteps = 0.001
 area = 0.0
 colour = 'yellow'
 colourRectangle = 'blue'
 iteration = 8
 function = '(x**2 - 1)*(x**2 - 4)*(x**2 - 9)*(x**2 - 16)*(x**2 - 25)'
 
+X = []
+y = []
+x = funcRange[0]
+while x <= funcRange[1]:
+    X.append(x)
+    y.append(eval(function))
+    x += miniSteps
+
 for i in range(iteration):
     area = 0.0
     plt.clf()
-    plotting(function, funcRange, 0.001, colour)
+    plt.plot(X, y, color=colour)
     x = funcRange[0]
     jump = interval/steps
     for j in range(steps):
@@ -45,7 +43,11 @@ for i in range(iteration):
     plt.xlabel('x')
     plt.ylabel('f(x)')
     x = funcRange[1]
-    plt.text((x+(interval/32)), (eval(function)+(interval/32)), ('Area = '+str(area)))
+    plt.text((x+(interval/32)), (eval(function)+(interval/32)),
+             ('Area = '+str(area)))
+    x = funcRange[0]
+    plt.text((x-(interval/32)), (eval(function)+(interval/32)),
+             ('i = '+str(i+1)))
     plt.show()
     plt.pause(0.5)
     
